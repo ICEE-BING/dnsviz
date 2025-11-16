@@ -1,0 +1,45 @@
+name: Sync upstream
+
+on:
+  schedule:
+    # 每天 03:00 UTC 执行一次（可根据需要调整）
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v4
+        with:
+          # 使用 PAT 可以避免某些权限问题，也方便后续 push
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # 添加上游仓库远程（请替换为真实的上游地址）
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/upstream-owner/upstream-repo.git
+          git fetch upstream
+
+      # 将上游的主分支合并到本仓库的主分支
+      # 如果你使用的是 main 以外的默认分支，请替换分支名
+      - name: Merge upstream changes
+        run: |
+          # 切换到本仓库默认分支
+          git checkout main
+          # 合并上游 main 分支到本地 main
+          git merge --no-edit upstream/main || true
+
+      - name: Push changes to origin
+        run: |
+          git push origin main || echo "No changes to push"
