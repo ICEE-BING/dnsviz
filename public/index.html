@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DNSViz - DNS analysis and visualization tool suite">
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logo-16x16.png">
+    <link rel="icon" type="image/png" sizes="60x60" href="images/logo-60x60.png">
+    <title>DNSViz - DNS Analysis and Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            color: white;
+        }
+        
+        .logo {
+            max-width: 300px;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        }
+        
+        .buttons {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        pre code {
+            background: none;
+            color: #f8f8f2;
+            padding: 0;
+        }
+        
+        .installation-section {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            opacity: 0.9;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid white;
+        }
+        
+        footer a:hover {
+            opacity: 0.8;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="images/logo-220x100.png" alt="DNSViz Logo" class="logo">
+            <h1>🔍 DNSViz</h1>
+            <p class="subtitle">DNS分析和可视化工具套件</p>
+            <p class="subtitle">DNS Analysis and Visualization Tool Suite</p>
+        </header>
+        
+        <div class="main-content">
+            <h2>关于 DNSViz / About DNSViz</h2>
+            <p>
+                DNSViz 是一个用于分析和可视化域名系统（DNS）行为的工具套件，包括其安全扩展（DNSSEC）。
+                该工具套件为基于Web的分析提供支持，可在 <a href="https://dnsviz.net/" target="_blank">https://dnsviz.net/</a> 上使用。
+            </p>
+            <p>
+                DNSViz is a tool suite for analysis and visualization of Domain Name System (DNS) behavior, 
+                including its security extensions (DNSSEC). This tool suite powers the Web-based analysis 
+                available at <a href="https://dnsviz.net/" target="_blank">https://dnsviz.net/</a>
+            </p>
+            
+            <div class="buttons">
+                <a href="https://github.com/dnsviz/dnsviz" class="btn" target="_blank">📦 GitHub 仓库</a>
+                <a href="https://dnsviz.net/" class="btn btn-secondary" target="_blank">🌐 在线使用</a>
+                <a href="#installation" class="btn">💻 安装说明</a>
+            </div>
+            
+            <h2>主要功能 / Key Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>🔬 DNS 探测</h3>
+                    <p>使用 <code>dnsviz probe</code> 命令对域名执行一系列查询，并将结果序列化为JSON格式。</p>
+                    <p>Perform DNS queries and serialize results to JSON format.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📊 可视化分析</h3>
+                    <p>使用 <code>dnsviz graph</code> 命令生成直观的图形化DNS分析结果，支持PNG和HTML格式。</p>
+                    <p>Generate visual graphs of DNS analysis in PNG or HTML format.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🔐 DNSSEC 验证</h3>
+                    <p>完整的DNSSEC验证支持，包括密钥分析和签名验证。</p>
+                    <p>Full DNSSEC validation support with key and signature analysis.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>📝 文本输出</h3>
+                    <p>使用 <code>dnsviz print</code> 命令生成适合终端或文件显示的文本输出。</p>
+                    <p>Generate text output suitable for terminal or file display.</p>
+                </div>
+            </div>
+            
+            <h2 id="installation">安装说明 / Installation</h2>
+            
+            <div class="info-box">
+                <strong>📌 注意 / Note:</strong> DNSViz 是一个命令行工具，需要在本地系统上安装和运行。
+                此静态页面仅提供项目信息和文档。
+                <br><br>
+                DNSViz is a command-line tool that needs to be installed and run on your local system. 
+                This static page only provides project information and documentation.
+            </div>
+            
+            <div class="installation-section">
+                <h3>使用包管理器安装 / Install via Package Manager</h3>
+                
+                <p><strong>Debian/Ubuntu:</strong></p>
+                <pre><code>sudo apt-get install dnsviz</code></pre>
+                
+                <p><strong>Fedora:</strong></p>
+                <pre><code>sudo dnf install dnsviz</code></pre>
+                
+                <p><strong>macOS (Homebrew):</strong></p>
+                <pre><code>brew install dnsviz</code></pre>
+                
+                <h3>使用 Python 安装 / Install via Python</h3>
+                
+                <p><strong>从 PyPI 安装 / Install from PyPI:</strong></p>
+                <pre><code>pip install dnsviz</code></pre>
+                
+                <p><strong>从源码安装 / Install from source:</strong></p>
+                <pre><code>git clone https://github.com/dnsviz/dnsviz.git
+cd dnsviz
+pip install -r requirements.txt
+pip install .</code></pre>
+            </div>
+            
+            <h2>快速开始 / Quick Start</h2>
+            
+            <h3>基本用法 / Basic Usage</h3>
+            
+            <p><strong>1. 分析域名 / Analyze a domain:</strong></p>
+            <pre><code>dnsviz probe example.com > example.com.json</code></pre>
+            
+            <p><strong>2. 生成可视化图形 / Generate visualization:</strong></p>
+            <pre><code>dnsviz graph -Thtml -O -r example.com.json</code></pre>
+            
+            <p><strong>3. 生成文本报告 / Generate text report:</strong></p>
+            <pre><code>dnsviz print < example.com.json</code></pre>
+            
+            <p><strong>4. 快速查询 / Quick query:</strong></p>
+            <pre><code>dnsviz query example.com</code></pre>
+            
+            <div class="warning-box">
+                <strong>⚠️ 系统要求 / System Requirements:</strong>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Python 2.7 或 3.5+ (推荐 Python 3.x)</li>
+                    <li>dnspython (1.13.0 或更高版本)</li>
+                    <li>pygraphviz (1.3 或更高版本)</li>
+                    <li>cryptography (36.0.0 或更高版本)</li>
+                </ul>
+            </div>
+            
+            <h2>Docker 使用 / Docker Usage</h2>
+            
+            <p>DNSViz 也提供 Docker 镜像，方便快速使用：</p>
+            <p>DNSViz is also available as a Docker image for quick usage:</p>
+            
+            <pre><code># 拉取镜像 / Pull the image
+docker pull dnsviz/dnsviz
+
+# 运行查询 / Run a query
+docker run dnsviz/dnsviz query example.com
+
+# 使用本地目录 / Use local directory
+docker run -v "$PWD:/data:rw" dnsviz/dnsviz probe example.com > probe.json
+docker run -v "$PWD:/data:rw" dnsviz/dnsviz graph -r probe.json -T png -O</code></pre>
+            
+            <h2>更多资源 / Additional Resources</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3>📖 文档</h3>
+                    <p>查看完整的文档和用户手册</p>
+                    <a href="https://github.com/dnsviz/dnsviz/blob/master/README.md" target="_blank">阅读文档</a>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>💬 问题反馈</h3>
+                    <p>在 GitHub 上报告问题或提出建议</p>
+                    <a href="https://github.com/dnsviz/dnsviz/issues" target="_blank">提交Issue</a>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>🌟 贡献代码</h3>
+                    <p>欢迎贡献代码和改进项目</p>
+                    <a href="https://github.com/dnsviz/dnsviz/pulls" target="_blank">Pull Requests</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>
+                DNSViz 是自由软件，遵循 GNU 通用公共许可证 v2+ 发布<br>
+                DNSViz is free software released under the GNU General Public License v2+
+            </p>
+            <p>
+                <a href="https://github.com/dnsviz/dnsviz" target="_blank">GitHub</a> | 
+                <a href="https://dnsviz.net/" target="_blank">Official Website</a> | 
+                <a href="https://github.com/dnsviz/dnsviz/blob/master/LICENSE" target="_blank">License</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">
+                Copyright © 2012-2024 Casey Deccio and Contributors
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
