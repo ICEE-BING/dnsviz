@@ -1,0 +1,5 @@
+# Redirect /doc to the documentation HTML
+/doc /dnsviz-graph.html 200
+
+# SPA-like behavior - serve index.html for all other routes
+/* /index.html 200
