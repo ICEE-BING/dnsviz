@@ -25,21 +25,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # 添加上游仓库远程（请替换为真实的上游地址）
+      # 添加上游仓库远程
       - name: Add upstream remote
         run: |
-          git remote add upstream https://github.com/upstream-owner/upstream-repo.git
+          git remote add upstream https://github.com/dnsviz/dnsviz.git
           git fetch upstream
 
       # 将上游的主分支合并到本仓库的主分支
-      # 如果你使用的是 main 以外的默认分支，请替换分支名
       - name: Merge upstream changes
         run: |
           # 切换到本仓库默认分支
-          git checkout main
-          # 合并上游 main 分支到本地 main
-          git merge --no-edit upstream/main || true
+          git checkout master
+          # 合并上游 master 分支到本地 master
+          git merge --no-edit upstream/master || true
 
       - name: Push changes to origin
         run: |
-          git push origin main || echo "No changes to push"
+          git push origin master || echo "No changes to push"
